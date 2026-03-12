@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Checkout</title>
+
+<script src="https://cdn.c360a.salesforce.com/beacon/c360a/37350531-11e8-4591-a7b6-643ba484d8c5/scripts/c360a.min.js"></script>
+
+<script src="app.js"></script>
+<script src="sdk.js"></script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Checkout</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</nav>
+
+</header>
+
+
+<section>
+
+<h2>Order Summary</h2>
+
+<table border="1" width="90%">
+
+<thead>
+
+<tr>
+<th>Image</th>
+<th>Product</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Total</th>
+</tr>
+
+</thead>
+
+<tbody id="checkoutItems"></tbody>
+
+</table>
+
+<h3 id="checkoutTotal"></h3>
+
+</section>
+
+
+<section>
+
+<h2>Customer Information</h2>
+
+<input id="name" placeholder="Full Name">
+
+<br><br>
+
+<input id="email" placeholder="Email">
+
+<br><br>
+
+<input id="phone" placeholder="Phone Number">
+
+<br><br>
+
+<textarea id="address" placeholder="Delivery Address"></textarea>
+
+</section>
+
+
+<section>
+
+<h2>Payment Details</h2>
+
+<input placeholder="Card Number">
+
+<br><br>
+
+<input placeholder="Expiry Date">
+
+<br><br>
+
+<input placeholder="CVV">
+
+<br><br>
+
+<button onclick="placeOrder()">Place Order</button>
+
+</section>
+
+
+
+
+<script>
+
+updateCartCounter()
+loadCheckout()
+
+function loadCheckout(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+let table = document.getElementById("checkoutItems")
+
+let total = 0
+
+cart.forEach(item=>{
+
+let row=document.createElement("tr")
+
+let itemTotal = item.price * item.qty
+
+total += itemTotal
+
+row.innerHTML=`
+
+<td><img src="${item.image}" width="70"></td>
+<td>${item.name}</td>
+<td>$${item.price}</td>
+<td>${item.qty}</td>
+<td>$${itemTotal}</td>
+
+`
+
+table.appendChild(row)
+
+})
+
+document.getElementById("checkoutTotal").innerText =
+"Grand Total: $" + total
+
+}
+
+
+function placeOrder(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || []
+
+if(cart.length===0){
+
+alert("Cart is empty")
+return
+
+}
+
+let order={
+
+name:document.getElementById("name").value,
+email:document.getElementById("email").value,
+phone:document.getElementById("phone").value,
+address:document.getElementById("address").value,
+items:cart
+
+}
+
+localStorage.setItem("order",JSON.stringify(order))
+
+
+/* Send Purchase Event to Data Cloud */
+
+sendDataCloudEvent("Purchase")
+
+
+localStorage.removeItem("cart")
+
+updateCartCounter()
+
+window.location="order.html"
+
+}
+
+</script>
+
+</body>
+
+</html>

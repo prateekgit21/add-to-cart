@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Ecommerce Demo</title>
+
+<!-- Salesforce Data Cloud Web SDK -->
+<script src="https://cdn.c360a.salesforce.com/beacon/c360a/37350531-11e8-4591-a7b6-643ba484d8c5/scripts/c360a.min.js"></script>
+
+<script src="app.js"></script>
+  <script src="sdk.js"></script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>My Ecommerce Store</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</nav>
+
+</header>
+
+
+<section style="text-align:center;margin-top:40px;">
+
+<h2>Welcome to Our Store</h2>
+
+<p>Discover amazing products at great prices.</p>
+
+<br>
+
+<a href="products.html">
+<button>Shop Now</button>
+</a>
+
+</section>
+
+
+<section class="featured-products">
+
+<h2 style="text-align:center;">Featured Products</h2>
+
+<div id="products" class="products"></div>
+
+</section>
+
+
+
+
+<script>
+
+updateCartCounter()
+loadProducts()
+
+</script>
+
+</body>
+
+</html>

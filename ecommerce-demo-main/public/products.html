@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Products</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.c360a.salesforce.com/beacon/c360a/37350531-11e8-4591-a7b6-643ba484d8c5/scripts/c360a.min.js"></script>
+
+<script src="app.js"></script>
+<script src="sdk.js"></script>
+</head>
+
+<body>
+<header>
+<h1>Products</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</nav>
+</header>
+<div id="products" class="products"></div>
+
+
+
+<script>
+updateCartCounter()
+loadProducts()
+</script>
+
+
+</body>
+
+</html>
