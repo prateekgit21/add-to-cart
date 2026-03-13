@@ -11,19 +11,30 @@
 <script src="app.js"></script>
   <!--<script src="sdk.js"></script>-->
 <link rel="stylesheet" href="style.css">
-   <script>
-    SalesforceInteractions.setLoggingLevel('DEBUG');
-    SalesforceInteractions.init({
-      consents:[
-        {
-          status: SalesforceInteractions.ConsentStatus.OptIn,
-          purpose: SalesforceInteractions.ConsentPurpose.Tracking,
-          provider: 'Test Provider'
+  <script>
+    // This listener waits specifically for the SDK to finish loading
+    document.addEventListener("ssotBeaconLoaded", function() {
+        if (typeof SalesforceInteractions !== "undefined") {
+            SalesforceInteractions.setLoggingLevel('DEBUG');
+            SalesforceInteractions.init({
+                consents: [
+                    {
+                        status: SalesforceInteractions.ConsentStatus.OptIn,
+                        purpose: SalesforceInteractions.ConsentPurpose.Tracking,
+                        provider: 'Test Provider'
+                    }
+                ]
+            }).then(() => {
+                console.log("Salesforce SDK Initialized and Opted-In");
+            });
         }
-      ]
     });
-    // No manual event listeners here!
-  </script>
+
+    // Fallback: If the event already fired, run it anyway
+    if (typeof SalesforceInteractions !== "undefined") {
+        document.dispatchEvent(new CustomEvent("ssotBeaconLoaded"));
+    }
+</script>
 
 </head>
 
